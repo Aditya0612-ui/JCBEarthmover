@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
-  signInWithPopup, 
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -27,6 +28,18 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check for redirect result on mount
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result) {
+          toast.success('Successfully signed in with Google!');
+        }
+      })
+      .catch((error) => {
+        console.error('Redirect error:', error);
+        toast.error('Sign-in failed. Please try again.');
+      });
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       if (user) {
@@ -56,9 +69,8 @@ export const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      toast.success('Successfully signed in with Google!');
-      return result;
+      await signInWithRedirect(auth, googleProvider);
+      // User will be redirected, no return value
     } catch (error) {
       toast.error(error.message);
       throw error;
