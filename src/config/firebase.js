@@ -5,13 +5,13 @@ import { getStorage } from 'firebase/storage';
 
 // Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA4m4WhSreXrdpgWKLu_FesPVCr28kE6Zw",
-  authDomain: "acd-app-c45bb.firebaseapp.com",
-  databaseURL: "https://acd-app-c45bb-default-rtdb.firebaseio.com",
-  projectId: "acd-app-c45bb",
-  storageBucket: "acd-app-c45bb.firebasestorage.app",
-  messagingSenderId: "530305515071",
-  appId: "1:530305515071:web:cf8741dfd61eade9c6428a"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
