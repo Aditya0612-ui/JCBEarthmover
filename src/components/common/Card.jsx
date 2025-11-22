@@ -7,8 +7,8 @@ const Card = ({ title, children, className = '', icon: Icon, actions }) => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             {Icon && (
-              <div className="p-2 bg-primary-100 rounded-lg">
-                <Icon className="text-primary-600" size={24} />
+              <div className="p-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl">
+                <Icon className="text-white" size={22} />
               </div>
             )}
             {title && <h3 className="text-lg font-semibold text-gray-900">{title}</h3>}

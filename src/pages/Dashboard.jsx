@@ -204,17 +204,17 @@ const Dashboard = () => {
           <div className="grid grid-cols-2 gap-4">
             <button 
               onClick={() => navigate('/vehicles')}
-              className="p-6 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors text-left"
+              className="p-6 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors text-left"
             >
-              <Truck className="text-primary-600 mb-2" size={32} />
+              <Truck className="text-orange-600 mb-2" size={32} />
               <p className="font-semibold text-gray-900">Add Vehicle</p>
               <p className="text-sm text-gray-600 mt-1">Register new vehicle</p>
             </button>
             <button 
               onClick={() => navigate('/customers')}
-              className="p-6 bg-green-50 hover:bg-green-100 rounded-lg transition-colors text-left"
+              className="p-6 bg-teal-50 hover:bg-teal-100 rounded-lg transition-colors text-left"
             >
-              <Users className="text-green-600 mb-2" size={32} />
+              <Users className="text-teal-600 mb-2" size={32} />
               <p className="font-semibold text-gray-900">Add Customer</p>
               <p className="text-sm text-gray-600 mt-1">Register new customer</p>
             </button>
@@ -228,9 +228,9 @@ const Dashboard = () => {
             </button>
             <button 
               onClick={() => navigate('/billing')}
-              className="p-6 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors text-left"
+              className="p-6 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors text-left"
             >
-              <DollarSign className="text-yellow-600 mb-2" size={32} />
+              <DollarSign className="text-amber-600 mb-2" size={32} />
               <p className="font-semibold text-gray-900">Generate Bill</p>
               <p className="text-sm text-gray-600 mt-1">Create new bill</p>
             </button>

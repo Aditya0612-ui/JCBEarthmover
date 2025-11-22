@@ -10,7 +10,7 @@
 
 @layer components {
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-md p-6 border border-gray-100;
   }
   
   .btn-primary {
