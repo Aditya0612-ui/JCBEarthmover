@@ -47,16 +47,16 @@ export const AuthProvider = ({ children }) => {
         const userRef = ref(database, `users/${user.uid}`);
         const snapshot = await get(userRef);
         if (snapshot.exists()) {
-          setUserRole(snapshot.val().role || 'viewer');
+          setUserRole(snapshot.val().role || 'admin');
         } else {
           // Set default role for new users
           await set(userRef, {
             email: user.email,
             displayName: user.displayName,
-            role: 'viewer',
+            role: 'admin',
             createdAt: new Date().toISOString()
           });
-          setUserRole('viewer');
+          setUserRole('admin');
         }
       } else {
         setUserRole(null);
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
       await set(ref(database, `users/${result.user.uid}`), {
         email,
         displayName,
-        role: 'viewer',
+        role: 'admin',
         createdAt: new Date().toISOString()
       });
       toast.success('Account created successfully!');
