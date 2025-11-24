@@ -3,23 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import InputField from '../components/common/InputField';
 import Button from '../components/common/Button';
-import { Mail, Lock, Phone, Truck } from 'lucide-react';
+import { Mail, Lock, Truck } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signInWithEmail, signUpWithEmail, signInWithPhone } = useAuth();
+  const { signInWithEmail, signUpWithEmail } = useAuth();
   
   const [isSignUp, setIsSignUp] = useState(false);
-  const [usePhoneAuth, setUsePhoneAuth] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    displayName: '',
-    phoneNumber: '',
-    otp: ''
+    displayName: ''
   });
-  const [confirmationResult, setConfirmationResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -47,31 +43,6 @@ const Login = () => {
     }
   };
 
-
-
-  const handlePhoneAuth = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      if (!confirmationResult) {
-        // Send OTP
-        const appVerifier = window.recaptchaVerifier;
-        const result = await signInWithPhone(formData.phoneNumber, appVerifier);
-        setConfirmationResult(result);
-        toast.success('OTP sent to your phone!');
-      } else {
-        // Verify OTP
-        await confirmationResult.confirm(formData.otp);
-        navigate('/');
-      }
-    } catch (error) {
-      console.error('Phone auth error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
@@ -89,33 +60,8 @@ const Login = () => {
           JCB & Earthmover Rental Management
         </p>
 
-        {/* Auth method toggle */}
-        <div className="flex gap-2 mb-6">
-          <button
-            onClick={() => setUsePhoneAuth(false)}
-            className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
-              !usePhoneAuth
-                ? 'bg-primary-500 text-white'
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            Email
-          </button>
-          <button
-            onClick={() => setUsePhoneAuth(true)}
-            className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
-              usePhoneAuth
-                ? 'bg-primary-500 text-white'
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            Phone
-          </button>
-        </div>
-
         {/* Email/Password Form */}
-        {!usePhoneAuth ? (
-          <form onSubmit={handleEmailAuth}>
+        <form onSubmit={handleEmailAuth}>
             {isSignUp && (
               <InputField
                 label="Full Name"
@@ -161,49 +107,9 @@ const Login = () => {
               {loading ? 'Please wait...' : isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </form>
-        ) : (
-          /* Phone Auth Form */
-          <form onSubmit={handlePhoneAuth}>
-            {!confirmationResult ? (
-              <InputField
-                label="Phone Number"
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="+91 1234567890"
-                required
-                icon={Phone}
-              />
-            ) : (
-              <InputField
-                label="OTP"
-                type="text"
-                name="otp"
-                value={formData.otp}
-                onChange={handleChange}
-                placeholder="Enter 6-digit OTP"
-                required
-                icon={Lock}
-              />
-            )}
-
-            <div id="recaptcha-container"></div>
-
-            <Button
-              type="submit"
-              variant="primary"
-              fullWidth
-              disabled={loading}
-              className="mb-4"
-            >
-              {loading ? 'Please wait...' : confirmationResult ? 'Verify OTP' : 'Send OTP'}
-            </Button>
-          </form>
-        )}
 
         {/* Toggle Sign Up/Sign In */}
-        {!usePhoneAuth && (
+        <div className="mt-6">
           <p className="text-center text-sm text-gray-600">
             {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
             <button
@@ -213,7 +119,7 @@ const Login = () => {
               {isSignUp ? 'Sign In' : 'Sign Up'}
             </button>
           </p>
-        )}
+        </div>
       </div>
     </div>
   );
